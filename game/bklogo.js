@@ -5,12 +5,12 @@ function BKLogo(callback) {
 	ctx.fillText("Loading... If you can read this, something went wrong probably", 10, 10);
 	this.timer = 0;
 	this.tick = function() {
-		++this.timer;
+		/*++this.timer;
 		if (this.timer <= 120) {
 			requestAnimationFrame(this.tick);
 			this.drawLog(this.timer);
 		}
-		else 
+		else */
 			callback();
 	}
 	this.logoimg = new Image();

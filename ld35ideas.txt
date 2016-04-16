@@ -1,0 +1,39 @@
+Shapeshift - ok. So you have these pieces with weird shapes, and your task is to fit them into a grid. Some pieces have like joint things and you can manipulate them.
+
+The light hurts you - you have a room and torches. Your task is to place torches so that you like don't hurt your plebs too much or something. Kinda like overspill.
+
+Mutation - see Create Life
+
+Indirect control - there are like several different colored things you put into the field. Based on position, they have effect on same colored elements on the field.
+
+You are the dungeon - not gonna win
+
+Create life - you put little seeds to certain place in the grid. As it grows, it gains more and more abilities, relies on lower forms etc. You have to come up with correct order of placement so it lives or something.
+
+Death is Progress - suicide themed deep shit with kind of ropes which you have to tangle. Oh shit.
+
+You don't control the Hero - one square has like a set path, and you have to place blocks and shit in such way he pushes it around. Sokoban style.
+
+Adaptation - wtf
+
+Build you way out - something like Tetris..... no, better. You have various blocks, which fall. You have to arrange them optimally so they create stairs for the hero. Like on a mountain with holes and shit. There are like random blocks appearing and you have to act fast.
+
+Limited view - some text adventure perhaps?
+
+Microworld - see Create Life
+
+Two colors - gotta come up with something
+
+One item, choose - no sé
+
+One massive enemy - 
+
+Companion - there are coloured squares in the field. Place companions so they ...
+
+Everything is connected - 
+
+3 rules - place squares into the grid. Squares of same color attract each other. When two same colors touch, it's game over.
+
+everything falls apart - 
+
+Limited resources - 
