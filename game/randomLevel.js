@@ -5,6 +5,8 @@ function randomLevel(x, y) {
 	var iters = 0;
 	grid = new Grid(x, y, []);
 	/*var*/ boxes = [];
+	console.log("init");
+	// define how many squares of which sizes will we have
 	while(iters < 10000) {
 		var add;
 		if (Math.random() < 0.6 && Math.pow(biggest, 2) < tilenum) {
@@ -24,9 +26,16 @@ function randomLevel(x, y) {
 		}
 		++iters;
 	}
-	if (squares.length > Math.max(x, y) * 0.9 || squares.length < tilenum * 0.05) {
+	
+	// try again on extreme cases
+	if (squares.length > Math.max(x, y) * 0.9 || squares.length < tilenum * 0.04) {
+		console.log("there are " + squares.length + " sqares. Resetting.")
 		return randomLevel(x, y);
 	}
+	
+	console.log(squares);
+	
+	// place squares randomly on the grid
 	for (var i = 0; i < boxes.length; ++i) {
 		var box = boxes[i];
 		var where = Math.floor(Math.random() * (x - box.size) * (y - box.size));
@@ -36,29 +45,41 @@ function randomLevel(x, y) {
 			++where;
 			where = Math.min(where, (x - box.size) * (y - box.size));
 			if (iters < (x - box.size) * (y - box.size)) {
+				console.log("Nowhere to put square, resetting.");
 				return randomLevel(x, y);
 			}
 		}
 	}
-	for (var i = 0; i < 10; ++i) {
+	console.log("finished putting squares");
+	// add crazy shapes to free spaces
+	for (var i = 0; i < 30; ++i) {
 		var areas = freeAreas();
 		for (var a in areas) {
 			var ar = areas[a];
-			var k = Math.floor(Math.sqrt(tilenum) * 0.7);
-			for (var size = Math.min(x, y); size > k; --size) {
+			var k = 3;//Math.floor(Math.sqrt(tilenum) * 0.7);
+			for (var size = Math.floor(Math.pow(Math.min(x, y), 0.65)); size > 2; --size) {
 				if (Math.pow(size, 2) < ar.length) {
-					size -= k - 1;
+					size -= 1;
 					console.log(size, ar.length);
 					tile = ar[Math.floor(Math.random() * ar.length)];
 					var cbox = new Box(createCrazyBox(size, tile[0], tile[1]));
-					boxes.push(cbox);
 					
-					cbox.drop(minx, miny);  // those variables are global. Fuck me for this hack.
+					
+					if (cbox.drop(minx, miny)) { // those variables are global. Fuck me for this hack.
+						boxes.push(cbox);
+					}
 					break;
 				}
 			}
 		}
 	}
+	
+	// if we end up with too few boxes
+	if (boxes.length < 3) {
+		console.log("There are less than 3 squares. Resetting.");
+		return randomLevel(x, y);
+	}
+	// fill remaining space with walls
 	areas = freeAreas();
 	allFrees = [];
 	var freeSpots = 0;
@@ -66,10 +87,24 @@ function randomLevel(x, y) {
 		freeSpots += areas[i].length;
 		allFrees = allFrees.concat(areas[i]);
 	}
-	grid.walls = [];
+	var walls = [];
 	for (var i in allFrees) {
-		grid.walls.push(allFrees[i]);
+		walls.push(allFrees[i]);
 	}
+	grid.walls = walls;
+	grid.assignColors();
+	
+	// finishing touches
+	for (var box in boxes) {
+		var b = boxes[box];
+		b.jumpBack();
+		if (!b.crazy) {
+			b.shift();
+		}
+		
+	}
+	grid.assignColors();
+	return strCurrLvl();
 }
 
 function freeAreas() {
@@ -122,7 +157,7 @@ function createCrazyBox(size, x, y) {
 		onmap = true;
 	}
 	else {
-		tiles = [[10, 10]];
+		tiles = [[Math.floor(Math.random() * grid.m), Math.floor(Math.random() * grid.n)]];
 		onmap = false;
 	}
 	while (tiles.length < Math.pow(size, 2)) {
@@ -132,16 +167,16 @@ function createCrazyBox(size, x, y) {
 		
 		while (direct !== start) {
 			var nextTile = [curr[0] + dir(direct)[0], curr[1] + dir(direct)[1]];
-			if (onmap) {
-				if (grid.spotFree(nextTile[0], nextTile[1], tiles)) {
+			//if (onmap) {
+				if (grid.spotFree(nextTile[0], nextTile[1], tiles, onmap)) {
 					tiles.push(nextTile);
 					break;
 				}
 				else {
 					direct = (direct + 1) % 4;
 				}
-			}
-			else {
+			//}
+			/*else {
 				var free = true;
 				for (var t in tiles) {
 					var tile = tiles[t];
@@ -156,7 +191,7 @@ function createCrazyBox(size, x, y) {
 				else {
 					direct = (direct + 1) % 4;
 				}
-			}
+			}*/
 		}
 	}
 	var minx = 100;
@@ -188,3 +223,10 @@ function dir(num) {
 
 
 
+function strCurrLvl() {
+	var newboxes = [];
+	for (var b in boxes) {
+		newboxes.push(boxes[b].crazyShape);
+	}
+	return JSON.stringify({x: grid.m, y: grid.n, boxes: newboxes, walls: grid.walls})
+}
