@@ -5,6 +5,7 @@ var lastmd = 0;
 var divPos;
 var lasDivPos;
 var selected;
+var graphics = {choc: []};
 function main() {
 	//mouse
 	var offset = $("#game").offset();
@@ -25,7 +26,19 @@ function main() {
 		--mouseDown;
 	}
 	
-	grid = new Grid(20, 20, [[0, 2],[2, 2],[2, 3]]);
+	document.body.onkeydown = function() {
+		if (selected) {
+			selected.shift();
+		}
+	}
+	// graphics
+	for (var i = 0; i < 3; ++i) {
+		graphics["choc"][i] = new Image();
+		graphics["choc"][i].src = "graphics/choc" + i + ".png";
+	}
+	
+	var l = levels[0];
+	grid = new Grid(l.x, l.y, l.walls, l.boxes);
 	
 	mainloop();
 }

@@ -1,12 +1,21 @@
-function Grid(m, n, walls) {
+function Grid(m, n, walls, b) {
+	if (b) {
+		for (var box in b) {
+			var bo = b[box];
+			var newBox = new Box(bo);
+			newBox.color = boxColors[box];
+			boxes.push(newBox);
+		}
+	}
 	this.m = m;
 	this.n = n;
 	this.walls = walls;
 	this.x = 20;
 	this.y = 20;
-	this.tilew = Math.min(400 / m, 400 / n);
+	this.tilew = Math.min(300 / m, 300 / n);
 	
-	this.spotFree = function(x, y) {
+	this.spotFree = function(x, y, extra) {
+		
 		for (var b in boxes) {
 			var box = boxes[b];
 			if (box.locked) {
@@ -18,10 +27,23 @@ function Grid(m, n, walls) {
 				}
 			}
 		}
-		for (var w in this.walls) {
-			var wall = this.walls[w];
+		var checks = []
+		if (extra) 
+			checks = this.walls.concat(extra);
+		else
+			checks = this.walls;
+		for (var w in checks) {
+			var wall = checks[w];
 			if (wall[0] === x && wall[1] === y)
 				return false;
+		}
+		return (x >= 0 && x < this.m && y >= 0 && y < this.n);
+	}
+	this.solved = function() {
+		for (var b in boxes) {
+			if (!boxes[b].locked) {
+				return false;
+			}
 		}
 		return true;
 	}
