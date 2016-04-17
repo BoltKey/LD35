@@ -3,6 +3,8 @@
 <title>LD 35</title>
 <link rel="shortcut icon" href="/boltlogo.png">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link href="style.css" rel="stylesheet">
+<link href="buttons.css" rel="stylesheet">
 <!--<script src='https://cdn1.kongregate.com/javascripts/kongregate_api.js'></script>-->
 
 <?php 

@@ -1,4 +1,4 @@
-var boxColors = ["#FBFF8A", "#FFC338", "#FFA578", "#DBAE97", "#E6F27C", "#BFFF59", "#EEFF8F"]
+var boxColors = ["#FBFF8A", "#FFC338", "#FFA578", "#DBAE97", "#E6F27C", "#BFFF59", "#EEFF8F", "#80DFFF", "#FFA080", "#BEFF3B", "#0059FF", "#BDD98D", "#BDD98D", "#26F0E6", "#C47DFF", "#FF78FF"]
 
 function Box(shape) {
 	if (typeof(shape) === 'number') {
@@ -50,8 +50,9 @@ function Box(shape) {
 			this.crazy = true;
 		}
 		if (this.locked) {
-			this.drop();
+			//this.drop();
 		}
+		sounds.rotate.play();
 	}
 	this.draw = function(last) {
 		var offset = [0, 0];
@@ -96,13 +97,14 @@ function Box(shape) {
 		}
 		else {
 			this.y = gridOffset[1] + Math.floor(Math.random() * grid.n * grid.tilew);
-			this.x = gridOffset[0] + grid.m * grid.tilew + Math.floor(Math.random() * 50);
+			this.x = gridOffset[0] - 150 - Math.floor(Math.random() * 50);
 		}
 		this.locked = false;
 	}
 	
 	this.drop = function(x, y) {
 		this.locked = false;
+		
 		var gridx;
 		var gridy;
 		if (typeof(x) == 'undefined') 
@@ -129,9 +131,10 @@ function Box(shape) {
 		this.x = grid.x + gridx * grid.tilew;
 		this.y = grid.y + gridy * grid.tilew;
 		this.locked = true;
-		if (grid.solved()) {
+		if (grid.solved() && currlvl > -2) {
 			victory();
 		}
+		sounds.drop.play();
 		return true;
 		
 	}

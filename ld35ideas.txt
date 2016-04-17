@@ -37,3 +37,22 @@ Everything is connected -
 everything falls apart - 
 
 Limited resources - 
+
+
+
+
+Chocolate box factory - backstory
+
+A random guy finally got the dream job of working in chocolate factory. Turns out it sucks.
+
+0: Oh my god, after years of cleaning cinema floors, I finally got the job!
+1: It is exactly like in the movies. Chocolate everywhere, all the time.
+2: Sorting chocolates all day long. What could possibly be better than this?
+3: Boss: Hey, you! Yes, you, the new guy! Don't you know the rules?
+4: Rules? Well, I have to admit I have not heard of them.
+5: Boss: Oh my, they are all the same. Just shut up and work.
+6:
+7: Uh oh. This may not be as positive as it seemed at the beginning.
+8: The kids back in the grammar school always said how they once visited a chocolate factory.
+9: They said how everyone was smiling and giving out free chocolate.
+10: 

@@ -1,4 +1,6 @@
 function randomLevel(x, y) {
+	
+	currlvl = -2;
 	var tilenum = x * y;
 	var squares = [];
 	var biggest = Math.floor(Math.sqrt(tilenum) * 0.5);
@@ -28,7 +30,7 @@ function randomLevel(x, y) {
 	}
 	
 	// try again on extreme cases
-	if (squares.length > Math.max(x, y) * 0.9 || squares.length < tilenum * 0.04) {
+	if (squares.length > Math.max(x, y) * 0.9 || squares.length < tilenum * 0.02) {
 		console.log("there are " + squares.length + " sqares. Resetting.")
 		return randomLevel(x, y);
 	}
@@ -104,6 +106,9 @@ function randomLevel(x, y) {
 		
 	}
 	grid.assignColors();
+	//grid.x = gridOffset[0];
+	$("#randStatus").html("Good luck!");
+	goToLev();
 	return strCurrLvl();
 }
 
@@ -157,7 +162,11 @@ function createCrazyBox(size, x, y) {
 		onmap = true;
 	}
 	else {
-		tiles = [[Math.floor(Math.random() * grid.m), Math.floor(Math.random() * grid.n)]];
+		do {
+			x = Math.floor(Math.random() * grid.m);
+			y = Math.floor(Math.random() * grid.n);
+		} while (!grid.spotFree(x, y, [], false));
+		tiles = [[x, y]];
 		onmap = false;
 	}
 	while (tiles.length < Math.pow(size, 2)) {

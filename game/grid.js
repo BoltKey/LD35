@@ -14,7 +14,7 @@ function Grid(m, n, walls, b) {
 	this.y = gridOffset[1];
 	this.tilew = Math.floor(Math.min(250 / m, 250 / n));
 	this.assignColors = function() {
-		for (var b in boxes) {
+		for (var b = 0; b < boxes.length; ++b) {
 			var box = boxes[b];
 			box.color = boxColors[b % boxColors.length];
 		}
@@ -55,6 +55,27 @@ function Grid(m, n, walls, b) {
 		return true;
 	}
 	this.draw = function() {
+		
+		
+		//start of dispenser
+		var dispCover = "#666666";
+		ctx.fillStyle = dispCover;
+		ctx.beginPath();
+		var x = gridOffset[0] + startOffset - 80;
+		var y = gridOffset[1] + 20;
+		ctx.moveTo(x, y);
+		ctx.lineTo(x, y - 25);
+		ctx.lineTo(x + 20, y - 65);
+		ctx.lineTo(x + 20, y - 40);
+		ctx.fill();
+		ctx.fillStyle = 'black';
+		ctx.beginPath();
+		ctx.moveTo(x, y);
+		ctx.lineTo(x + 20, y - 40);
+		ctx.lineTo(x + 20, y + 250);
+		ctx.lineTo(x, y + 290);
+		ctx.fill();
+		
 		//draw chocolate box here
 		
 		var boxRgb = [0, 100, 200];
@@ -62,16 +83,17 @@ function Grid(m, n, walls, b) {
 		ctx.fillRect(this.x - 20, this.y - 20, this.m * this.tilew + 40, this.n * this.tilew + 40);
 		ctx.fillStyle = "rgb(" + boxRgb[0] * 0.8 + ", " + boxRgb[1] * 0.8 + ", " + boxRgb[2] * 0.8 + ")";
 		ctx.beginPath();
-		ctx.lineTo(this.x + this.m * this.tilew + 20, this.y + this.n * this.tilew + 20);
-		
-		ctx.moveTo(this.x + this.m * this.tilew + 20, this.y - 20);
-		ctx.lineTo(this.x + this.m * this.tilew + 60, this.y + 20);
-		ctx.lineTo(this.x + this.m * this.tilew + 60, this.y + this.n * this.tilew + 60);
-		
-		
-		ctx.lineTo(this.x + 20, this.y + this.n * this.tilew + 60);
 		ctx.lineTo(this.x - 20, this.y + this.n * this.tilew + 20);
+		
+		ctx.lineTo(this.x - 20, this.y - 20);
+		ctx.lineTo(this.x - 40, this.y + 20);
+		ctx.lineTo(this.x - 40, this.y + this.n * this.tilew + 60);
+		
+		
+		ctx.lineTo(this.x + this.m * this.tilew, this.y + this.n * this.tilew + 60);
+		
 		ctx.lineTo(this.x + this.m * this.tilew + 20, this.y + this.n * this.tilew + 20);
+		ctx.lineTo(this.x - 20, this.y + this.n * this.tilew + 20);
 		ctx.fill();
 		
 		
@@ -87,6 +109,21 @@ function Grid(m, n, walls, b) {
 			ctx.fillRect(this.x + wall[0] * this.tilew, this.y + wall[1] * this.tilew, this.tilew - 2, this.tilew - 2);
 		}
 		
+		
+		// cover of dispenser
+		ctx.fillStyle = dispCover;
+		x += 20;
+		y -= 65;
+		ctx.beginPath();
+		ctx.moveTo(x, y);
+		ctx.lineTo(x + 10, y - 20);
+		ctx.lineTo(x + 340, y - 20);
+		ctx.lineTo(x + 340, y + 310);
+		ctx.lineTo(x + 310, y + 375);
+		ctx.lineTo(x - 20, y + 375);
+		ctx.lineTo(x - 20, y + 355);
+		ctx.lineTo(x, y + 315);
+		ctx.fill();
 		
 	}
 }

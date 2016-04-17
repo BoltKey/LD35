@@ -10,6 +10,7 @@ function click() {
 				selected = box;
 				box.selected = true;
 				boxOffset = [divPos.x - box.x, divPos.y - box.y];
+				sounds.pick.play();
 			}
 		}
 	}
